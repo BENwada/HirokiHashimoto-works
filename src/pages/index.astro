@@ -1,18 +1,23 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import client from '../lib/microcms';
+import Navigation from '../components/Navigation.astro'; // Import Navigation
 
 // microCMSからデータを取得
 const data = await client.get({ endpoint: "works" }).catch((err) => console.error(err));
 ---
 
 <Layout>
+  <Navigation /> // Add Navigation component
   <main class="p-4">
     <h1 class="text-2xl font-bold mb-4">microCMS Connection Test</h1>
     {data && data.contents ? (
       <ul>
         {data.contents.map((content) => (
-          <li key={content.id}>{content.title ?? 'No title'}</li>
+          <li key={content.id}>
+            {content.title ?? 'No title'}
+            {content.eyecatch && <img src={content.eyecatch.url} alt={content.title ?? ''} width={content.eyecatch.width} height={content.eyecatch.height} />}
+          </li>
         ))}
       </ul>
     ) : (
