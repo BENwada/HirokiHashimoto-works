@@ -1,16 +1,17 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import client from '../lib/microcms';
-import Navigation from '../components/Navigation.astro'; // Import Navigation
+import Navigation from '../components/Navigation.astro';
+import HeroSlider from '../components/HeroSlider.astro';
 
 // microCMSからデータを取得
-const data = await client.get({ endpoint: "works" }).catch((err) => console.error(err));
+// const data = await client.get({ endpoint: "works" }).catch((err) => console.error(err));
 ---
 
 <Layout>
-  <Navigation /> // Add Navigation component
-  <main class="p-4">
-    <h1 class="text-2xl font-bold mb-4">microCMS Connection Test</h1>
+  <Navigation />
+  <main>
+    <HeroSlider />
+    {/* <h1 class="text-2xl font-bold mb-4">microCMS Connection Test</h1>
     {data && data.contents ? (
       <ul>
         {data.contents.map((content) => (
@@ -22,6 +23,6 @@ const data = await client.get({ endpoint: "works" }).catch((err) => console.erro
       </ul>
     ) : (
       <p>Could not fetch data from microCMS. Please check your API key, service domain, and if the 'blogs' API exists.</p>
-    )}
+    )} */}
   </main>
 </Layout>
