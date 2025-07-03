@@ -1,11 +1,22 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+import client from '../lib/microcms';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// microCMSからデータを取得
+const data = await client.get({ endpoint: "works" }).catch((err) => console.error(err));
 ---
 
 <Layout>
-	<Welcome />
+  <main class="p-4">
+    <h1 class="text-2xl font-bold mb-4">microCMS Connection Test</h1>
+    {data && data.contents ? (
+      <ul>
+        {data.contents.map((content) => (
+          <li key={content.id}>{content.title ?? 'No title'}</li>
+        ))}
+      </ul>
+    ) : (
+      <p>Could not fetch data from microCMS. Please check your API key, service domain, and if the 'blogs' API exists.</p>
+    )}
+  </main>
 </Layout>
