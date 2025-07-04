@@ -2,27 +2,29 @@
 import Layout from '../layouts/Layout.astro';
 import Navigation from '../components/Navigation.astro';
 import HeroSlider from '../components/HeroSlider.astro';
+import client from '../lib/microcms';
+import type { Work } from '../types/microcms';
 
 // microCMSからデータを取得
-// const data = await client.get({ endpoint: "works" }).catch((err) => console.error(err));
+const data = await client.get<{ contents: Work[] }>({ endpoint: "works" }).catch((err) => console.error(err));
 ---
 
 <Layout>
   <Navigation />
   <main>
-    <HeroSlider />
-    {/* <h1 class="text-2xl font-bold mb-4">microCMS Connection Test</h1>
-    {data && data.contents ? (
-      <ul>
-        {data.contents.map((content) => (
-          <li key={content.id}>
-            {content.title ?? 'No title'}
-            {content.eyecatch && <img src={content.eyecatch.url} alt={content.title ?? ''} width={content.eyecatch.width} height={content.eyecatch.height} />}
-          </li>
-        ))}
-      </ul>
-    ) : (
-      <p>Could not fetch data from microCMS. Please check your API key, service domain, and if the 'blogs' API exists.</p>
-    )} */}
+    {data && <HeroSlider works={data.contents} />}
+    <!--  <h1 class="text-2xl font-bold mb-4">microCMS Connection Test</h1> -->
+    <!-- {data && data.contents ? ( -->
+    <!--   <ul> -->
+    <!--     {data.contents.map((content: Work) => ( -->
+    <!--       <li> -->
+    <!--         {content.title ?? 'No title'} -->
+    <!--         {content.eyecatch && <img src={content.eyecatch.url} alt={content.title ?? ''} width={content.eyecatch.width} height={content.eyecatch.height} />} -->
+    <!--       </li> -->
+    <!--     ))} -->
+    <!--   </ul> -->
+    <!-- ) : ( -->
+    <!--   <p>Could not fetch data from microCMS. Please check your API key, service domain, and if the 'blogs' API exists.</p> -->
+    <!-- )}  -->
   </main>
 </Layout>

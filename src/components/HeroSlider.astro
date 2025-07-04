@@ -1,31 +1,13 @@
 
 ---
-// Swiper.jsのコンポーネントをインポート
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/pagination';
+import HeroSliderComponent from './HeroSlider.tsx';
+import type { Work } from '../types/microcms';
 
-// ダミーの作品データ
-const works = [
-  { id: 1, title: '作品名1', imageUrl: 'https://via.placeholder.com/800x400?text=Work+1' },
-  { id: 2, title: '作品名2', imageUrl: 'https://via.placeholder.com/800x400?text=Work+2' },
-  { id: 3, title: '作品名3', imageUrl: 'https://via.placeholder.com/800x400?text=Work+3' },
-  { id: 4, title: '作品名4', imageUrl: 'https://via.placeholder.com/800x400?text=Work+4' },
-  { id: 5, title: '作品名5', imageUrl: 'https://via.placeholder.com/800x400?text=Work+5' },
-];
+interface Props {
+  works: Work[];
+}
+
+const { works } = Astro.props;
 ---
 
-<div class="relative">
-  <Swiper
-    spaceBetween={50}
-    slidesPerView={1}
-    pagination={{ clickable: true }}
-  >
-    {works.map((work) => (
-      <SwiperSlide>
-        <img src={work.imageUrl} alt={work.title} class="w-full" />
-        <p class="text-right text-sm mt-2">{work.title}</p>
-      </SwiperSlide>
-    ))}
-  </Swiper>
-</div>
+<HeroSliderComponent works={works} client:only="react" />
